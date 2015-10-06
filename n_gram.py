@@ -1,6 +1,7 @@
 from jsonhandler import Jsonhandler
 from collections import Counter
 
+import argparse
 import logging
 
 
@@ -8,7 +9,7 @@ def find_ngrams(input_list, n):
     return zip(*[input_list[i:] for i in range(n)])
 
 def dissimilarity(corpus_profile, corpus_size, unknown_profile, unknown_size):
-    keys = set(corpus_profile.keys()) | set(unknown_profile.keys())
+    keys = set(unknown_profile.keys())
     summe = 0.0
     for k in keys:
         f1 = float(corpus_profile[k]) / corpus_size
@@ -72,15 +73,34 @@ def fit_parameters(handler):
             results.append((evaluation["accuracy"], n, L))
     return results
 
-def main(corpus):
-    handler = Jsonhandler(corpus)
+def tira(corpusdir, outputdir):
+    handler = Jsonhandler(corpusdir, out = "stamatatos07.json")
     parameters = fit_parameters(handler)
     acc, n, L = max(parameters, key = lambda r: r[0])
     logging.info("Choose parameters: n=%d, l=%d", n, L)
     handler.loadTesting()
     authors, scores = create_ranking(handler, n, L)
-    handler.storeJson(handler.unknowns, authors, scores)
+    handler.storeJson(handler.unknowns, authors, scores, path =
+            outputdir)
 
-# Save results to json-file out.json (passing 'scores' is optional)
-logging.basicConfig(level=logging.DEBUG,format='%(asctime)s %(levelname)s: %(message)s')
-main("C10")
+def main():
+    parser = argparse.ArgumentParser(description='Tira submission for' +
+            ' "Author identification using imbalanced and limited training texts."')
+    parser.add_argument('-i', 
+                        action='store',
+                        help='Path to input directory')
+    parser.add_argument('-o', 
+                        action='store',
+                        help='Path to output directory')
+    
+    args = vars(parser.parse_args())
+    
+    corpusdir = args['i']
+    outputdir = args['o']
+    
+    tira(corpusdir, outputdir)
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    logging.basicConfig(level=logging.DEBUG,format='%(asctime)s %(levelname)s: %(message)s')
+    main()
