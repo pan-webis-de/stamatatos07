@@ -2,7 +2,7 @@
 
 This is a reimplementation of the approach to authorship attribution originally described in
 
-> E. Stamatatos. [Author identification using imbalanced and limited training texts](http://www.icsd.aegean.gr/lecturers/stamatatos/papers/tir2007.pdf). In Proc. of TIR, pp. 237- 241, 2007 [[paper](http://www.icsd.aegean.gr/lecturers/stamatatos/papers/tir2007.pdf)]
+> Efstathios Stamatatos. [Author identification using imbalanced and limited training texts](http://www.icsd.aegean.gr/lecturers/stamatatos/papers/tir2007.pdf). In Proc. of TIR, pp. 237- 241, 2007 [[paper](http://www.icsd.aegean.gr/lecturers/stamatatos/papers/tir2007.pdf)]
 
 It was reimplemented as part of a science reproducibility study alongside [14 other authorship attribution approaches](https://github.com/search?q="Who+wrote+the+web"+user:pan-webis-de). The results of the reproducibility study can be found in
 
